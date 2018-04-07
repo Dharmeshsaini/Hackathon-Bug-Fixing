@@ -20,7 +20,12 @@ contract Marriage {
     /// It is confidential data, shouldn't be seen by everyone. 
     
     /* Fix_1(2): Put restrict the access of the data */
-    mapping(uint256 => Couple) public coupleData;
+    mapping(uint256 => Couple) private coupleData;
+    function marriage  {
+        marriage = msg.groom;
+        marriage = msg.bride;
+    }
+    
     
     /// @notice true refers to user get married, False refers to opposite
     mapping(address => bool) public isUserMarried;
@@ -30,6 +35,8 @@ contract Marriage {
 
     function Marriage() public {
         /* Fix_2(3):Set the lawyer which publish this contract */
+        groom = msg.lawyer;
+        bride = msg.lawyer;
     }
 
     /**
@@ -43,9 +50,10 @@ contract Marriage {
         require(msg.sender == _groom || msg.sender == _bride);
         
         /* Fix_3(3): check that Groom & Bride both are unmarried, otherwise throw */
+        required(msg.MarriageStatus == _groom && msg.MarriageStatus == _bride);
         
         /* Fix_4(3): check that sent Ether value is equal to the FEE required, otherwise throw */
-        
+        required( feeCollected.Status == fee)
         feeCollected = feeCollected + Fee;
         lastRegistryNo = lastRegistryNo + 1;
         /// Pass the Marriage Status below to Pending
@@ -54,7 +62,10 @@ contract Marriage {
         isUserMarried[_bride] = true;
         
         /* Fix_5(3): Emit event related to successful marriage */
+        required(@notice == @dev);
+        
         return lastRegistryNo;
+        
     }
 
 
@@ -64,12 +75,14 @@ contract Marriage {
      */
      function approvedRequest(uint256 _registryNo) public {
      /* Fix_6(5): Write a modifier to check that certain function can only be called by lawyer and associate with this function*/
-     
-         if (coupleData[_registryNo].status == MarriageStatus(2)) {
+     modifier{
+    
+    if (coupleData[_registryNo].status == MarriageStatus(2)) {
              coupleData[_registryNo].status = MarriageStatus(1);
          } 
          else
             coupleData[_registryNo].status = MarriageStatus(0);
+            _
      }
 
     /**
@@ -79,15 +92,20 @@ contract Marriage {
      */
     function divorced(uint256 _registry) public {
         /* Fix_7(8): Asociate right modifier and set the couple status to  Divorced */
+        modifier{My contract(@notice == @dev  
+        _ )}
+        function Divorced(
+        if(@param =@dev)
         /* Fix_8(3): Emit the right event related to successful Divorced */
+        msg.approvedRequest=Divorced;
     }
 
     /// @notice only be called by the lawyer
     function withdrawEther() public returns(bool) {
-        /* Fix_9(10): Associate the right modifier and write logic to transfer all collected ether to the lawyer and return result*/
-    }
-
-    /* Fix_10(10): Add the fallback function which should prevent transfer of any accidental ether to the contract*/
-
-
-}
+        return(
+        required( feeCollected.Status == fee)
+        feeCollected = feeCollected + Fee;
+        lastRegistryNo = lastRegistryNo + 1;
+        coupleData[lastRegistryNo] = Couple(_groom, _bride, MarriageStatus(2), now);
+        isUserMarried[_groom] = true;
+        isUserMarried[_bride] = true;)
